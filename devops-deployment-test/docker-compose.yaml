@@ -1,0 +1,36 @@
+version: '3'
+services:
+  postgresql:
+    image: postgres
+    environment:
+      - POSTGRES_PASSWORD=sammypw
+      - POSTGRES_USER=sammy
+      - POSTGRES_DB=backend
+
+  backend:
+    image: backend
+    ports:
+      - 5001
+
+  frontend:
+    image: frontend
+    ports:
+      - 5000
+
+  backend-lb:
+    image: dockercloud/haproxy
+    links:
+      - backend
+    ports:
+      - 80
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+
+  frontend-lb:
+    image: dockercloud/haproxy
+    links:
+      - frontend
+    ports:
+      - 80:80
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
