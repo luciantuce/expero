@@ -2,13 +2,14 @@ Solution:
 
 A docker-compose file that will bring up 5 services: frontend, backend, postgresql, frontend-lb, backend-lb.
 The only exported port will be 80 which leads to frontend load balancer.
+The solution could be deployed on any machine with docker installed on it.
 
 Steps to deploy:
 
 * Since we don't have a Docker registry the local images should be built for the FE and BE apps.
 
 ```bash
-   cd expero/devops-deployment-test/backend
+   cd expero/devops-deployment-test/frontend
    docker build --no-cache -t frontend .
    cd expero/devops-deployment-test/backend
    docker build --no-cache -t backend .
