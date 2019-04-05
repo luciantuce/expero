@@ -10,6 +10,6 @@ ENV FLASK_APP app.py
 ENV FLASK_DEBUG 1
 ENV VERSION 0.0.1
 ENV NAME frontend
-ENV API http://backend-lb:80
+ENV API http://backend:5001
 EXPOSE 5000
 CMD [ "python3", "-m", "flask", "run", "--host=0.0.0.0" ]
