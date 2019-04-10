@@ -40,3 +40,25 @@ ff2586274844        frontend              "python3 -m flask ru…"   About a min
 ```
 
 It can be killed any frontend/backend container and the apps will still function.
+
+
+# Swarm mode
+
+Note: Because it is already developed a docker-compose file for the previous deployment, something different could be, deploy the stack using just commands (that could be easily wrapped up in a script).
+
+## Create docker network
+
+Note: This would be for restricting services (e.g. only BE could access the DB)
+
+```
+docker network create --driver overlay frontend
+docker network create --driver overlay backend
+```
+
+## Create services
+
+```
+docker service create --network backend --mount type=bind,source=/swarm/volumes,target=/var/lib/postgresql/data -p 5432 --name postgresql -e "POSTGRES_PASSWORD=sammypw" -e "POSTGRES_USER=sammy" -e "POSTGRES_DB=backend" postgres
+docker service create --network backend --network frontend --mode global -p 5001 --name backend backend
+docker service create --network backend --network frontend --mode global -p 80:5000 --name frontend frontend
+```
